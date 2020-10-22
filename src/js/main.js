@@ -23,9 +23,7 @@ button.addEventListener("click", addInputValue);
 const paintCard = (src, name) => {
   const containerCardSeries = document.querySelector(".js-container-result");
   containerCardSeries.innerHTML += ` <div class="js-info-of-my-serie info-of-my-serie">
-      <li class="js-results">
-        <img src="${src}" alt="image of series" />
-      </li>
+        <img src="${src}" alt="image of series" class = "image-card" />
       <h3 class="js-name-series">${name}</h3>
       </div>`;
 };

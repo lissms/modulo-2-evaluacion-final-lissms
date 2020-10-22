@@ -2,16 +2,32 @@
   border: solid 1px #fabada;
   width: 300px;
   height: 300px;
-  display: inline-block;
+  position: fixed;
 }
 .container__results-search {
+  position: fixed;
+  top: auto;
+  left: 360px;
   border: solid 1px #fabada;
   width: 900px;
-  height: 600px;
-  display: inline-block;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow-y: auto;
 }
 .info-of-my-serie {
-  border: solid 1px green;
-  width: 100px;
-  height: 100px;
+  background-color: #fabada;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 230px;
+  height: 325px;
+  margin: 5px 10px;
+}
+.image-card {
+  margin: 5px;
+  width: 186px;
+  height: 261px;
 }
