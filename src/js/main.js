@@ -31,7 +31,7 @@ const paintAllCards = () => {
 
 /* paints funstions */
 const containerCardsSeries = document.querySelector(".js-list-of-series");
-const paintCard = (src, name, id) => {
+const paintCard = (src, name, id, red) => {
   /*  containerCardsSeries.innerHTML = "";  */
 
   containerCardsSeries.innerHTML += ` 
@@ -54,24 +54,22 @@ const assignListener = () => {
 };
 
 const addFavoriteSeries = (even) => {
-  const myFavorite = even.currentTarget;
+  const cliked = even.currentTarget;
+  console.log("cliked", cliked);
   let myFavoriteId = even.currentTarget.id;
-  listOfMyFavorite.push(showsList[myFavoriteId]);
-  paintAllCards();
+  let favorite = showsList[myFavoriteId];
+  listOfMyFavorite.push(favorite);
+  console.log("favorite", favorite);
+
+  for (let i = 0; i < listOfMyFavorite.length; i++) {
+    if (listOfMyFavorite[i] === favorite) {
+      console.log("entre en if");
+      cliked.classList.add("red");
+    }
+  }
+
   paintAllFavorites();
 
-  // guardar en un listOfMyFavorites
-  // llamar a pintar
-  //console.log("elemento:", myFavorite);
-  // console.log("id de dond fue el evento:", myFavoriteId);
-  // myFavorite.classList.add("red"); /* añade cnuevas clases */
-  //  paintFavoriteCard(
-  //    showsList[myFavoriteId].show.image.medium,
-  //    showsList[myFavoriteId].show.name,
-  //    myFavoriteId
-  //   ); /* pinta a la izquierda */
-
-  //  listOfMyFavorite.push(myFavorite);
   console.log("listOfMyFavorite", listOfMyFavorite);
 };
 /* pinta todas las tarjetas favoritas */
@@ -90,10 +88,10 @@ const containerFavorites = document.querySelector(
   ".js-container__favorite-series"
 );
 const paintFavoriteCard = (src, name, id) => {
-  containerFavorites.innerHTML += ` <li id=${id} class="js-results">
-  <div class="js-info-of-my-serie info-of-my-serie">
-  <img class="image card" src="${src}" alt=""
-    <h3 class="js-name-series"> ${name}</h3>
+  containerFavorites.innerHTML += ` <li id=${id} class="js-results js-font">
+  <div class="js-info-of-my-serie info-of-my-serie js-width-info-of-my-serie">
+  <img class="image-card js-width-image" src="${src}" alt="imagen"
+    <h3 class="js-name-series js-width-h3"> ${name}</h3>
   </div>
   </li>`;
 };
