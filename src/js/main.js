@@ -41,19 +41,21 @@ const paintCard = (src, name, id) => {
     <h3 class="js-name-series"> ${name}</h3>
   </div>
 </li>`;
-  /////////////////////////////
 };
 
-/* paint favorite */
-/* const favoriteCard = document.querySelector(".js-results");
-
-const paintFavoriteCard = (ev) => {
-  console.log("favorita", ev.currentTarget.id);
+/* const assignListener = () => {
+  let containerCards = document.querySelectorAll(".js-results");
+  for (let i = 0; i < containerCards.length; i++) {
+    containerCards[i].addEventListener("click", addFavoriteSeries);
+  }
 };
 
-favoriteCard.addEventListener("click", paintFavoriteCard); */
+const addFavoriteSeries = (even) => {
+  console.log("object", even.currentTarget.id);
+}; */
 
-////////////////////////////////////
+//////////////////////////////
+let listOfMyFavorite = [];
 
 const assignListener = () => {
   let containerCards = document.querySelectorAll(".js-results");
@@ -63,15 +65,19 @@ const assignListener = () => {
 };
 
 const addFavoriteSeries = (even) => {
-  console.log("object", even.currentTarget.id);
+  const myFavorite = even.currentTarget;
+  console.log("id de dond fue el evento:", myFavorite);
+  myFavorite.classList.add("red");
+  listOfMyFavorite.push(myFavorite);
+  console.log("listOfMyFavorite", listOfMyFavorite);
+  paintFavorite();
 };
 
-///////////////////////////////////////// /* con esta funcion algunos identifica el id y otros no */
-/* const addFavoriteSeries = (even) => {
-  const hello = even.target.id;
-  console.log("object", hello);
+const paintFavorite = () => {
+  const containerFavorites = document.querySelector(
+    ".js-container__favorite-series"
+  );
+  for (let i = 0; i < listOfMyFavorite.length; i++) {
+    containerFavorites.innerHTML = `${listOfMyFavorite[i]}`;
+  }
 };
-
-containerCardsSeries.addEventListener("click", addFavoriteSeries); */
-
-////////////////////////////
