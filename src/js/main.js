@@ -64,7 +64,7 @@ const assignListener = () => {
   }
 };
 
-const addFavoriteSeries = (even) => {
+/* const addFavoriteSeries = (even) => {
   const myFavorite = even.currentTarget;
   console.log("id de dond fue el evento:", myFavorite);
   myFavorite.classList.add("red");
@@ -77,7 +77,33 @@ const paintFavorite = () => {
   const containerFavorites = document.querySelector(
     ".js-container__favorite-series"
   );
-  for (let i = 0; i < listOfMyFavorite.length; i++) {
     containerFavorites.innerHTML = `${listOfMyFavorite[i]}`;
-  }
+  
+}; */
+
+const addFavoriteSeries = (even) => {
+  const myFavorite = even.currentTarget;
+  let myFavoriteId = even.currentTarget.id;
+  console.log("elemento:", myFavorite);
+  console.log("id de dond fue el evento:", myFavoriteId);
+  myFavorite.classList.add("red");
+  paintFavoriteCard(
+    showsList[myFavoriteId].show.image.medium,
+    showsList[myFavoriteId].show.name,
+    myFavoriteId
+  );
+
+  /*  listOfMyFavorite.push(myFavorite);
+  console.log("listOfMyFavorite", listOfMyFavorite); */
+};
+const paintFavoriteCard = (src, name, id) => {
+  const containerFavorites = document.querySelector(
+    ".js-container__favorite-series"
+  );
+  containerFavorites.innerHTML += ` <li id = ${id} class="js-results">
+  <div class="js-info-of-my-serie info-of-my-serie">
+  <img class="image card" src="${src}" alt=""
+    <h3 class="js-name-series"> ${name}</h3>
+  </div>
+  </li>`;
 };
