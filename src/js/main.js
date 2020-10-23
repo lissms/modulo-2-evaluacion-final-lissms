@@ -43,17 +43,6 @@ const paintCard = (src, name, id) => {
 </li>`;
 };
 
-/* const assignListener = () => {
-  let containerCards = document.querySelectorAll(".js-results");
-  for (let i = 0; i < containerCards.length; i++) {
-    containerCards[i].addEventListener("click", addFavoriteSeries);
-  }
-};
-
-const addFavoriteSeries = (even) => {
-  console.log("object", even.currentTarget.id);
-}; */
-
 //////////////////////////////
 let listOfMyFavorite = [];
 
@@ -64,37 +53,31 @@ const assignListener = () => {
   }
 };
 
-/* const addFavoriteSeries = (even) => {
-  const myFavorite = even.currentTarget;
-  console.log("id de dond fue el evento:", myFavorite);
-  myFavorite.classList.add("red");
-  listOfMyFavorite.push(myFavorite);
-  console.log("listOfMyFavorite", listOfMyFavorite);
-  paintFavorite();
-};
-
-const paintFavorite = () => {
-  const containerFavorites = document.querySelector(
-    ".js-container__favorite-series"
-  );
-    containerFavorites.innerHTML = `${listOfMyFavorite[i]}`;
-  
-}; */
-
 const addFavoriteSeries = (even) => {
   const myFavorite = even.currentTarget;
   let myFavoriteId = even.currentTarget.id;
-  console.log("elemento:", myFavorite);
-  console.log("id de dond fue el evento:", myFavoriteId);
-  myFavorite.classList.add("red");
-  paintFavoriteCard(
-    showsList[myFavoriteId].show.image.medium,
-    showsList[myFavoriteId].show.name,
-    myFavoriteId
-  );
+  listOfMyFavorite.push(showsList[myFavoriteId]);
+  paintAllCards();
+  //paintAllFavorites()  //
 
-  /*  listOfMyFavorite.push(myFavorite);
-  console.log("listOfMyFavorite", listOfMyFavorite); */
+  // guardar en un listOfMyFavorites
+  // llamar a pintar
+  //console.log("elemento:", myFavorite);
+  // console.log("id de dond fue el evento:", myFavoriteId);
+  // myFavorite.classList.add("red"); /* añade cnuevas clases */
+  //  paintFavoriteCard(
+  //    showsList[myFavoriteId].show.image.medium,
+  //    showsList[myFavoriteId].show.name,
+  //    myFavoriteId
+  //   ); /* pinta a la izquierda */
+
+  //  listOfMyFavorite.push(myFavorite);
+  console.log("listOfMyFavorite", listOfMyFavorite);
+};
+
+const paintAllFavorites = () => {
+  // for para recorrer favoritos
+  //   llamando a paintFavoriteCard
 };
 const paintFavoriteCard = (src, name, id) => {
   const containerFavorites = document.querySelector(
@@ -107,3 +90,12 @@ const paintFavoriteCard = (src, name, id) => {
   </div>
   </li>`;
 };
+
+/* 
+resumen:
+
+- todo lo que sea cambiar el html desde las funciones de pintar
+- las funciones manejadoras de eventos solo cambian los arrays y llaman a repintar
+- después de pintar siempre volvemos a escuchar los eventos
+
+*/
