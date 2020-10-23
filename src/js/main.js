@@ -20,11 +20,20 @@ const paintAllCards = () => {
   containerCardsSeries.innerHTML = "";
 
   for (let i = 0; i < showsList.length; i++) {
-    paintCard(
-      showsList[i].show.image.medium,
-      showsList[i].show.name,
-      i
-    ); /* llamo a la funcion q pinta */
+    if (showsList[i].show.image === null) {
+      paintCard(
+        `//via.placeholder.com/210x295/ffffff/666666/?
+      text=TV.`,
+        showsList[i].show.name,
+        i
+      );
+    } else {
+      paintCard(
+        showsList[i].show.image.medium,
+        showsList[i].show.name,
+        i
+      ); /* llamo a la funcion q pinta */
+    }
   }
   assignListener();
 };
