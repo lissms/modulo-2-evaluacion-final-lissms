@@ -58,7 +58,7 @@ const addFavoriteSeries = (even) => {
   let myFavoriteId = even.currentTarget.id;
   listOfMyFavorite.push(showsList[myFavoriteId]);
   paintAllCards();
-  //paintAllFavorites()  //
+  paintAllFavorites();
 
   // guardar en un listOfMyFavorites
   // llamar a pintar
@@ -74,16 +74,23 @@ const addFavoriteSeries = (even) => {
   //  listOfMyFavorite.push(myFavorite);
   console.log("listOfMyFavorite", listOfMyFavorite);
 };
-
+/* pinta todas las tarjetas favoritas */
 const paintAllFavorites = () => {
-  // for para recorrer favoritos
-  //   llamando a paintFavoriteCard
+  containerFavorites.innerHTML = ""; /* borro para volver a pintar */
+  for (let i = 0; i < listOfMyFavorite.length; i++) {
+    paintFavoriteCard(
+      listOfMyFavorite[i].show.image.medium,
+      listOfMyFavorite[i].show.name,
+      i
+    );
+  }
 };
+/* pinta una targeta favorita */
+const containerFavorites = document.querySelector(
+  ".js-container__favorite-series"
+);
 const paintFavoriteCard = (src, name, id) => {
-  const containerFavorites = document.querySelector(
-    ".js-container__favorite-series"
-  );
-  containerFavorites.innerHTML += ` <li id = ${id} class="js-results">
+  containerFavorites.innerHTML += ` <li id=${id} class="js-results">
   <div class="js-info-of-my-serie info-of-my-serie">
   <img class="image card" src="${src}" alt=""
     <h3 class="js-name-series"> ${name}</h3>
