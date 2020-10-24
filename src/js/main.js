@@ -92,6 +92,7 @@ const paintAllFavorites = () => {
       i
     );
   }
+
   localStorage.setItem(
     "listOfMyFavorite",
     JSON.stringify(listOfMyFavorite)
