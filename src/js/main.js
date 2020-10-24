@@ -82,6 +82,7 @@ const addFavoriteSeries = (even) => {
   console.log("listOfMyFavorite", listOfMyFavorite);
 };
 /* pinta todas las tarjetas favoritas */
+
 const paintAllFavorites = () => {
   containerFavorites.innerHTML = ""; /* borro para volver a pintar */
   for (let i = 0; i < listOfMyFavorite.length; i++) {
@@ -91,7 +92,12 @@ const paintAllFavorites = () => {
       i
     );
   }
+  localStorage.setItem(
+    "listOfMyFavorite",
+    JSON.stringify(listOfMyFavorite)
+  ); /* guardo en mi local storage un avez q estan dentro */
 };
+
 /* pinta una targeta favorita */
 const containerFavorites = document.querySelector(
   ".js-container__favorite-series"
@@ -104,6 +110,26 @@ const paintFavoriteCard = (src, name, id) => {
   </div>
   </li>`;
 };
+
+/* pinta las favoritas desde el local storage */
+
+let savedFavoriteCard = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+console.log("savedFavoriteCard", savedFavoriteCard);
+
+const paintAllFavoritesSaved = () => {
+  for (let i = 0; i < savedFavoriteCard.length; i++) {
+    paintFavoriteCard(
+      savedFavoriteCard[i].show.image.medium,
+      savedFavoriteCard[i].show.name,
+      i
+    );
+  }
+};
+paintAllFavoritesSaved();
+
+/////////////////////7
+
+/* local storage */
 
 /* 
 resumen:
