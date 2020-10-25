@@ -1,142 +1,152 @@
 "use strict";
-/* me llamo al boton */
+
+/*datos de inicio */
+
+/* 1-DOM Y VARIABLES */
 const button = document.querySelector(".js-search-button");
 let resultsSearch = document.querySelector(".js-search-input");
+const containerCardsSeries = document.querySelector(".js-ul-list-of-series");
+const containerFavorites = document.querySelector(".js-container__favorite-series");
+/* 2- MI API */
 let showsList;
-/* obtengo el valor del input */
-const addInputValue = () => {
-  fetch(`http://api.tvmaze.com/search/shows?q=${resultsSearch.value}`)
-    .then((response) => response.json())
-    .then((data) => {
-      showsList = data;
-      paintAllCards();
-    });
+
+/* 3- MI LOCAL STORAGE */
+/* let listOfMyFavorite; */
+
+/* mis funciones que pintan */
+
+/* 1 FUNCIONES QUE PINTAN BUSQUEDA (paintCard) (paintAllCards)*/
+
+const paintCard = (src, name, id, red) => {
+  containerCardsSeries.innerHTML += ` 
+    <li id = ${id} class="js-li-results ${red}">
+    <div class="js-info-of-my-serie info-of-my-serie">
+    <img class="image card" src="${src}" alt=""
+      <h3 class="js-name-series"> ${name}</h3>
+    </div>
+  </li>`;
 };
 
-addInputValue();
-button.addEventListener("click", addInputValue);
-
-const paintAllCards = () => {
+//////////////
+/* const paintAllCards = () => {
   containerCardsSeries.innerHTML = "";
-
   for (let i = 0; i < showsList.length; i++) {
+    let favoriteCssClass;
+    let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+
+    if (showsList[i].name === myLocalStorageFavorite) {
+      favoriteCssClass = "red";
+    } else {
+      favoriteCssClass = "";
+    }
+
     if (showsList[i].show.image === null) {
       paintCard(
         `//via.placeholder.com/210x295/ffffff/666666/?
       text=TV.`,
         showsList[i].show.name,
-        i
+        i,
+        favoriteCssClass
       );
     } else {
-      paintCard(
-        showsList[i].show.image.medium,
-        showsList[i].show.name,
-        i
-      ); /* llamo a la funcion q pinta */
+      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
     }
   }
-  assignListener();
-};
+}; */
 
-/* paints funstions */
-const containerCardsSeries = document.querySelector(".js-list-of-series");
-const paintCard = (src, name, id, red) => {
-  /*  containerCardsSeries.innerHTML = "";  */
-
-  containerCardsSeries.innerHTML += ` 
-  <li id = ${id} class="js-results">
-  <div class="js-info-of-my-serie info-of-my-serie">
-  <img class="image card" src="${src}" alt=""
-    <h3 class="js-name-series"> ${name}</h3>
-  </div>
-</li>`;
-};
-
-//////////////////////////////
-let listOfMyFavorite = [];
-
-const assignListener = () => {
-  let containerCards = document.querySelectorAll(".js-results");
-  for (let i = 0; i < containerCards.length; i++) {
-    containerCards[i].addEventListener("click", addFavoriteSeries);
-  }
-};
-
-const addFavoriteSeries = (even) => {
-  const cliked = even.currentTarget;
-  console.log("cliked", cliked);
-  let myFavoriteId = even.currentTarget.id;
-  let favorite = showsList[myFavoriteId];
-  listOfMyFavorite.push(favorite);
-  console.log("favorite", favorite);
-
-  for (let i = 0; i < listOfMyFavorite.length; i++) {
-    if (listOfMyFavorite[i] === favorite) {
-      console.log("entre en if");
-      cliked.classList.add("red");
-    }
-  }
-
-  paintAllFavorites();
-
-  console.log("listOfMyFavorite", listOfMyFavorite);
-};
-/* pinta todas las tarjetas favoritas */
-
-const paintAllFavorites = () => {
-  containerFavorites.innerHTML = ""; /* borro para volver a pintar */
-  for (let i = 0; i < listOfMyFavorite.length; i++) {
-    paintFavoriteCard(
-      listOfMyFavorite[i].show.image.medium,
-      listOfMyFavorite[i].show.name,
-      i
-    );
-  }
-
-  localStorage.setItem(
-    "listOfMyFavorite",
-    JSON.stringify(listOfMyFavorite)
-  ); /* guardo en mi local storage un avez q estan dentro */
-};
-
-/* pinta una targeta favorita */
-const containerFavorites = document.querySelector(
-  ".js-container__favorite-series"
-);
+/* 1 FUNCIONES QUE PINTAN FAVORITOS */
+/* pinta un favorito */
 const paintFavoriteCard = (src, name, id) => {
   containerFavorites.innerHTML += ` <li id=${id} class="js-results js-font">
-  <div class="js-info-of-my-serie info-of-my-serie js-width-info-of-my-serie">
-  <img class="image-card js-width-image" src="${src}" alt="imagen"
-    <h3 class="js-name-series js-width-h3"> ${name}</h3>
-  </div>
-  </li>`;
+    <div class="js-info-of-my-serie info-of-my-serie js-width-info-of-my-serie">
+    <img class="image-card js-width-image" src="${src}" alt="imagen"
+      <h3 class="js-name-series js-width-h3"> ${name}</h3>
+    </div>
+    </li>`;
 };
 
-/* pinta las favoritas desde el local storage */
+/* pinta todos los favoritos */
 
-let savedFavoriteCard = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-console.log("savedFavoriteCard", savedFavoriteCard);
-
-const paintAllFavoritesSaved = () => {
-  for (let i = 0; i < savedFavoriteCard.length; i++) {
-    paintFavoriteCard(
-      savedFavoriteCard[i].show.image.medium,
-      savedFavoriteCard[i].show.name,
-      i
-    );
+const paintAllFavorites = () => {
+  containerFavorites.innerHTML = "";
+  let listOfMyFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+  if (listOfMyFavorite !== null) {
+    /* para que cuando esté vacio el storage, no me de error la funcion */
+    for (let i = 0; i < listOfMyFavorite.length; i++) {
+      paintFavoriteCard(listOfMyFavorite[i].show.image.medium, listOfMyFavorite[i].show.name, i);
+    }
   }
 };
-paintAllFavoritesSaved();
 
-/////////////////////7
+/* mis funciones handler */
 
-/* local storage */
+/* 1-FUNCION HANDER DEL BOTON BUSCAR, Q LLAMA A FUNCION Q PINTA TODAS LAS TARJETAS */
 
-/* 
-resumen:
+const searchResultFromApi = () => {
+  fetch(`http://api.tvmaze.com/search/shows?q=${resultsSearch.value}`)
+    .then((response) => response.json())
+    .then((data) => {
+      showsList = data;
+      paintAllCards();
+      assignListener();
+    });
+};
 
-- todo lo que sea cambiar el html desde las funciones de pintar
-- las funciones manejadoras de eventos solo cambian los arrays y llaman a repintar
-- después de pintar siempre volvemos a escuchar los eventos
+button.addEventListener("click", searchResultFromApi);
 
-*/
+/* 1-FUNCION HANDER DE MI SERIE FAVORITA, Q METE EN LOCALSTORAGE(f2), Y LLAMA A FUNCION Q PINTA FAVORITAS, //Y A TODAS LAS TARJETASC ON CLASE ROJA EN LA SELECCIONADA */
+
+const addFavoriteSeriesFromLocalStorage = (ev) => {
+  let myFavorite = ev.currentTarget;
+  let myFavoriteId = ev.currentTarget.id;
+  let favorite = showsList[myFavoriteId];
+  let listOfMyFavoriteArray = [];
+  let storagedFavoriteList = localStorage.getItem("listOfMyFavorite");
+  myFavorite.classList.add("red");
+
+  if (storagedFavoriteList !== null) {
+    listOfMyFavoriteArray = JSON.parse(storagedFavoriteList);
+  }
+
+  listOfMyFavoriteArray.push(favorite);
+
+  localStorage.setItem("listOfMyFavorite", JSON.stringify(listOfMyFavoriteArray));
+  console.log("myFavorite", myFavorite);
+  paintAllFavorites();
+};
+
+/* funciones herramientas */
+
+const assignListener = () => {
+  let containerCards = document.querySelectorAll(".js-li-results");
+  for (let i = 0; i < containerCards.length; i++) {
+    containerCards[i].addEventListener("click", addFavoriteSeriesFromLocalStorage);
+  }
+};
+
+/* llamadas */
+paintAllFavorites();
+///////////////////////////////
+const paintAllCards = () => {
+  containerCardsSeries.innerHTML = "";
+  let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+  for (let i = 0; i < showsList.length; i++) {
+    let favoriteCssClass = "";
+    for (let j = 0; j < myLocalStorageFavorite.length; j++) {
+      if (showsList[i].show.name === myLocalStorageFavorite[j].show.name) {
+        favoriteCssClass = "red";
+      }
+    }
+    if (showsList[i].show.image === null) {
+      paintCard(
+        `//via.placeholder.com/210x295/ffffff/666666/?
+            text=TV.`,
+        showsList[i].show.name,
+        i,
+        favoriteCssClass
+      );
+    } else {
+      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
+    }
+  }
+};
