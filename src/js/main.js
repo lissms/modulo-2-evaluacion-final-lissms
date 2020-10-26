@@ -10,12 +10,9 @@ const containerFavorites = document.querySelector(".js-container__favorite-serie
 /* 2- MI API */
 let showsList;
 
-/* 3- MI LOCAL STORAGE */
-/* let listOfMyFavorite; */
-
 /* mis funciones que pintan */
 
-/* 1 FUNCIONES QUE PINTAN BUSQUEDA (paintCard) (paintAllCards)*/
+/* 1 FUNCIONES QUE PINTAN BUSQUEDA (paintCard. una sola) (paintAllCards. todas con localstorage vacio) (paintAllCardsWithFavoriteCssClass. todas con alguna q coincide conel local storage)*/
 
 const paintCard = (src, name, id, red) => {
   containerCardsSeries.innerHTML += ` 
@@ -26,31 +23,6 @@ const paintCard = (src, name, id, red) => {
     </div>
   </li>`;
 };
-
-/* 1 FUNCIONES QUE PINTAN FAVORITOS */
-/* pinta un favorito */
-const paintFavoriteCard = (src, name, id) => {
-  containerFavorites.innerHTML += ` <li id=${id} class="js-results js-font">
-    <div class="js-info-of-my-serie info-of-my-serie js-width-info-of-my-serie">
-    <img class="image-card js-width-image" src="${src}" alt="imagen"
-      <h3 class="js-name-series js-width-h3"> ${name}</h3>
-    </div>
-    </li>`;
-};
-
-/* pinta todos los favoritos */
-
-const paintAllFavorites = () => {
-  containerFavorites.innerHTML = "";
-  let listOfMyFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-  if (listOfMyFavorite !== null) {
-    /* para que cuando esté vacio el storage, no me de error la funcion */
-    for (let i = 0; i < listOfMyFavorite.length; i++) {
-      paintFavoriteCard(listOfMyFavorite[i].show.image.medium, listOfMyFavorite[i].show.name, i);
-    }
-  }
-};
-
 /* pinta todas las terjetas, cuando todavia no hay ninguna en favoritos */
 const paintAllCards = () => {
   containerCardsSeries.innerHTML = "";
@@ -90,6 +62,29 @@ const paintAllCardsWithFavoriteCssClass = () => {
       );
     } else {
       paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
+    }
+  }
+};
+/* 1 FUNCIONES QUE PINTAN FAVORITOS */
+/* pinta un favorito */
+const paintFavoriteCard = (src, name, id) => {
+  containerFavorites.innerHTML += ` <li id=${id} class="js-results js-font">
+    <div class="js-info-of-my-serie info-of-my-serie js-width-info-of-my-serie">
+    <img class="image-card js-width-image" src="${src}" alt="imagen"
+      <h3 class="js-name-series js-width-h3"> ${name}</h3>
+    </div>
+    </li>`;
+};
+
+/* pinta todos los favoritos */
+
+const paintAllFavorites = () => {
+  containerFavorites.innerHTML = "";
+  let listOfMyFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+  if (listOfMyFavorite !== null) {
+    /* para que cuando esté vacio el storage, no me de error la funcion */
+    for (let i = 0; i < listOfMyFavorite.length; i++) {
+      paintFavoriteCard(listOfMyFavorite[i].show.image.medium, listOfMyFavorite[i].show.name, i);
     }
   }
 };
