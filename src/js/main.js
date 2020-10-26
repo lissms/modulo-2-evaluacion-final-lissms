@@ -87,7 +87,12 @@ const searchResultFromApi = () => {
     .then((response) => response.json())
     .then((data) => {
       showsList = data;
-      paintAllCards();
+      let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+      if (myLocalStorageFavorite !== null) {
+        paintAllCardsWithFavoriteCssClass();
+      } else {
+        paintAllCards();
+      }
       assignListener();
     });
 };
@@ -100,9 +105,9 @@ const addFavoriteSeriesFromLocalStorage = (ev) => {
   let myFavorite = ev.currentTarget;
   let myFavoriteId = ev.currentTarget.id;
   let favorite = showsList[myFavoriteId];
+  myFavorite.classList.add("red");
   let listOfMyFavoriteArray = [];
   let storagedFavoriteList = localStorage.getItem("listOfMyFavorite");
-  myFavorite.classList.add("red");
 
   if (storagedFavoriteList !== null) {
     listOfMyFavoriteArray = JSON.parse(storagedFavoriteList);
@@ -127,7 +132,33 @@ const assignListener = () => {
 /* llamadas */
 paintAllFavorites();
 ///////////////////////////////
-const paintAllCards = () => {
+/* const paintAllCards = () => {
+  containerCardsSeries.innerHTML = "";
+  let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+  for (let i = 0; i < showsList.length; i++) {
+    let favoriteCssClass = "";
+    for (let j = 0; j < myLocalStorageFavorite.length; j++) {
+      if (showsList[i].show.name === myLocalStorageFavorite[j].show.name) {
+        favoriteCssClass = "red";
+      }
+    }
+
+    if (showsList[i].show.image === null) {
+      paintCard(
+        `//via.placeholder.com/210x295/ffffff/666666/?
+            text=TV.`,
+        showsList[i].show.name,
+        i,
+        favoriteCssClass
+      );
+    } else {
+      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
+    }
+  }
+}; */
+///////////////
+
+const paintAllCardsWithFavoriteCssClass = () => {
   containerCardsSeries.innerHTML = "";
   let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
   for (let i = 0; i < showsList.length; i++) {
@@ -140,13 +171,30 @@ const paintAllCards = () => {
     if (showsList[i].show.image === null) {
       paintCard(
         `//via.placeholder.com/210x295/ffffff/666666/?
-            text=TV.`,
+              text=TV.`,
         showsList[i].show.name,
         i,
         favoriteCssClass
       );
     } else {
       paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
+    }
+  }
+};
+
+//
+const paintAllCards = () => {
+  containerCardsSeries.innerHTML = "";
+  for (let i = 0; i < showsList.length; i++) {
+    if (showsList[i].show.image === null) {
+      paintCard(
+        `//via.placeholder.com/210x295/ffffff/666666/?
+              text=TV.`,
+        showsList[i].show.name,
+        i
+      );
+    } else {
+      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i);
     }
   }
 };
