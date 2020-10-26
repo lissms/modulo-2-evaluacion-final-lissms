@@ -77,6 +77,18 @@ const paintFavoriteCard = (src, name, id) => {
 };
 
 /* pinta todos los favoritos */
+/*  const paintAllFavoritesCallback = () => {
+  containerFavorites.innerHTML = "";
+  let listOfMyFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+  for (let i = 0; i < showsList.length; i++) {
+    for (let j = 0; j < listOfMyFavorite.length; j++) {
+      if (listOfMyFavorite !== null && showsList[i].show.name !== listOfMyFavorite[j].show.name) {
+        
+        paintFavoriteCard(listOfMyFavorite[i].show.image.medium, listOfMyFavorite[i].show.name, i);
+      }
+    }
+  }
+};  */
 
 const paintAllFavorites = () => {
   containerFavorites.innerHTML = "";
@@ -115,19 +127,49 @@ button.addEventListener("click", searchResultFromApi);
 const addFavoriteSeriesFromLocalStorage = (ev) => {
   let myFavorite = ev.currentTarget;
   let myFavoriteId = ev.currentTarget.id;
-  let favorite = showsList[myFavoriteId];
+  console.log("myFavorite", myFavoriteId);
+  let cliked = showsList[myFavoriteId];
   myFavorite.classList.add("red");
+
   let listOfMyFavoriteArray = [];
   let storagedFavoriteList = localStorage.getItem("listOfMyFavorite");
+  let flag = false;
+  if (listOfMyFavoriteArray.length === 0 && storagedFavoriteList === null) {
+    listOfMyFavoriteArray.push(cliked);
+    console.log("entro en el else");
+  } else if (storagedFavoriteList !== null) {
+    console.log("entro en el if");
 
-  if (storagedFavoriteList !== null) {
     listOfMyFavoriteArray = JSON.parse(storagedFavoriteList);
+    console.log("objeto clicado desde la api", cliked.show.id);
+    console.log(" myFavoriteId", myFavoriteId);
+    /*   console.log("clicado de mi storage", listOfMyFavoriteArray[myFavoriteId].show.id);
+     */ console.log("listOfMyFavoriteArray.length", listOfMyFavoriteArray.length);
+    let index;
+    for (let i = 0; i < listOfMyFavoriteArray.length; i++) {
+      /*  debugger; */
+      if (listOfMyFavoriteArray[i].show.id === cliked.show.id) {
+        index = i;
+        flag = true;
+        break;
+      } else {
+        flag = false;
+        console.log("metelo");
+      }
+    }
+    console.log("i", index);
+    if (flag === true) {
+      listOfMyFavoriteArray.splice(index, 1);
+    } else {
+      listOfMyFavoriteArray.push(cliked);
+    }
   }
-
-  listOfMyFavoriteArray.push(favorite);
-
+  console.log("listOfMyFavoriteArray", listOfMyFavoriteArray);
   localStorage.setItem("listOfMyFavorite", JSON.stringify(listOfMyFavoriteArray));
-  console.log("myFavorite", myFavorite);
+
+  //////
+
+  /* console.log("listOfMyFavoriteArray", listOfMyFavoriteArray); */
   paintAllFavorites();
 };
 
@@ -142,3 +184,42 @@ const assignListener = () => {
 
 /* llamadas */
 paintAllFavorites();
+
+//////////////////// hasta aqui ok...
+/* const paintAllCardsWithFavoriteCssClass = () => {
+  containerCardsSeries.innerHTML = "";
+  let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+  for (let i = 0; i < showsList.length; i++) {
+    let favoriteCssClass = "";
+    for (let j = 0; j < myLocalStorageFavorite.length; j++) {
+      if (showsList[i].show.name === myLocalStorageFavorite[j].show.name) {
+        favoriteCssClass = "red";
+      }
+    }
+    if (showsList[i].show.image === null) {
+      paintCard(
+        `//via.placeholder.com/210x295/ffffff/666666/?
+              text=TV.`,
+        showsList[i].show.name,
+        i,
+        favoriteCssClass
+      );
+    } else {
+      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
+    }
+  }
+}; */
+///////////////////
+/* const paintAllFavorites = () => {
+  containerFavorites.innerHTML = "";
+  let listOfMyFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+  if (listOfMyFavorite !== null) {
+    for (let i = 0; i < listOfMyFavorite.length; i++) {
+      paintFavoriteCard(listOfMyFavorite[i].show.image.medium, listOfMyFavorite[i].show.name, i);
+    }
+  }
+  if (listOfMyFavorite !== null && )
+
+}; */
+
+///
