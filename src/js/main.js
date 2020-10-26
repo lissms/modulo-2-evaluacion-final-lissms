@@ -94,7 +94,7 @@ const paintAllFavorites = () => {
 /* 1-FUNCION HANDER DEL BOTON BUSCAR, Q LLAMA A FUNCION Q PINTA TODAS LAS TARJETAS */
 
 const searchResultFromApi = () => {
-  fetch(`http://api.tvmaze.com/search/shows?q=${resultsSearch.value}`)
+  fetch(`//api.tvmaze.com/search/shows?q=${resultsSearch.value}`)
     .then((response) => response.json())
     .then((data) => {
       showsList = data;
