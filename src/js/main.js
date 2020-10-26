@@ -27,33 +27,6 @@ const paintCard = (src, name, id, red) => {
   </li>`;
 };
 
-//////////////
-/* const paintAllCards = () => {
-  containerCardsSeries.innerHTML = "";
-  for (let i = 0; i < showsList.length; i++) {
-    let favoriteCssClass;
-    let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-
-    if (showsList[i].name === myLocalStorageFavorite) {
-      favoriteCssClass = "red";
-    } else {
-      favoriteCssClass = "";
-    }
-
-    if (showsList[i].show.image === null) {
-      paintCard(
-        `//via.placeholder.com/210x295/ffffff/666666/?
-      text=TV.`,
-        showsList[i].show.name,
-        i,
-        favoriteCssClass
-      );
-    } else {
-      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
-    }
-  }
-}; */
-
 /* 1 FUNCIONES QUE PINTAN FAVORITOS */
 /* pinta un favorito */
 const paintFavoriteCard = (src, name, id) => {
@@ -74,6 +47,49 @@ const paintAllFavorites = () => {
     /* para que cuando esté vacio el storage, no me de error la funcion */
     for (let i = 0; i < listOfMyFavorite.length; i++) {
       paintFavoriteCard(listOfMyFavorite[i].show.image.medium, listOfMyFavorite[i].show.name, i);
+    }
+  }
+};
+
+/* pinta todas las terjetas, cuando todavia no hay ninguna en favoritos */
+const paintAllCards = () => {
+  containerCardsSeries.innerHTML = "";
+  for (let i = 0; i < showsList.length; i++) {
+    if (showsList[i].show.image === null) {
+      paintCard(
+        `//via.placeholder.com/210x295/ffffff/666666/?
+              text=TV.`,
+        showsList[i].show.name,
+        i
+      );
+    } else {
+      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i);
+    }
+  }
+};
+
+/* pinta todas lar tarjetas y en rojo las q ya estan en favorito, es decir las q tb aparecen en el local-storage */
+
+const paintAllCardsWithFavoriteCssClass = () => {
+  containerCardsSeries.innerHTML = "";
+  let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
+  for (let i = 0; i < showsList.length; i++) {
+    let favoriteCssClass = "";
+    for (let j = 0; j < myLocalStorageFavorite.length; j++) {
+      if (showsList[i].show.name === myLocalStorageFavorite[j].show.name) {
+        favoriteCssClass = "red";
+      }
+    }
+    if (showsList[i].show.image === null) {
+      paintCard(
+        `//via.placeholder.com/210x295/ffffff/666666/?
+              text=TV.`,
+        showsList[i].show.name,
+        i,
+        favoriteCssClass
+      );
+    } else {
+      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
     }
   }
 };
@@ -131,70 +147,3 @@ const assignListener = () => {
 
 /* llamadas */
 paintAllFavorites();
-///////////////////////////////
-/* const paintAllCards = () => {
-  containerCardsSeries.innerHTML = "";
-  let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-  for (let i = 0; i < showsList.length; i++) {
-    let favoriteCssClass = "";
-    for (let j = 0; j < myLocalStorageFavorite.length; j++) {
-      if (showsList[i].show.name === myLocalStorageFavorite[j].show.name) {
-        favoriteCssClass = "red";
-      }
-    }
-
-    if (showsList[i].show.image === null) {
-      paintCard(
-        `//via.placeholder.com/210x295/ffffff/666666/?
-            text=TV.`,
-        showsList[i].show.name,
-        i,
-        favoriteCssClass
-      );
-    } else {
-      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
-    }
-  }
-}; */
-///////////////
-
-const paintAllCardsWithFavoriteCssClass = () => {
-  containerCardsSeries.innerHTML = "";
-  let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-  for (let i = 0; i < showsList.length; i++) {
-    let favoriteCssClass = "";
-    for (let j = 0; j < myLocalStorageFavorite.length; j++) {
-      if (showsList[i].show.name === myLocalStorageFavorite[j].show.name) {
-        favoriteCssClass = "red";
-      }
-    }
-    if (showsList[i].show.image === null) {
-      paintCard(
-        `//via.placeholder.com/210x295/ffffff/666666/?
-              text=TV.`,
-        showsList[i].show.name,
-        i,
-        favoriteCssClass
-      );
-    } else {
-      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
-    }
-  }
-};
-
-//
-const paintAllCards = () => {
-  containerCardsSeries.innerHTML = "";
-  for (let i = 0; i < showsList.length; i++) {
-    if (showsList[i].show.image === null) {
-      paintCard(
-        `//via.placeholder.com/210x295/ffffff/666666/?
-              text=TV.`,
-        showsList[i].show.name,
-        i
-      );
-    } else {
-      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i);
-    }
-  }
-};
