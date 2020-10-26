@@ -76,20 +76,6 @@ const paintFavoriteCard = (src, name, id) => {
     </li>`;
 };
 
-/* pinta todos los favoritos */
-/*  const paintAllFavoritesCallback = () => {
-  containerFavorites.innerHTML = "";
-  let listOfMyFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-  for (let i = 0; i < showsList.length; i++) {
-    for (let j = 0; j < listOfMyFavorite.length; j++) {
-      if (listOfMyFavorite !== null && showsList[i].show.name !== listOfMyFavorite[j].show.name) {
-        
-        paintFavoriteCard(listOfMyFavorite[i].show.image.medium, listOfMyFavorite[i].show.name, i);
-      }
-    }
-  }
-};  */
-
 const paintAllFavorites = () => {
   containerFavorites.innerHTML = "";
   let listOfMyFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
