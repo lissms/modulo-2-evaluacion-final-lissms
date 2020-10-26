@@ -160,6 +160,7 @@ const addFavoriteSeriesFromLocalStorage = (ev) => {
     console.log("i", index);
     if (flag === true) {
       listOfMyFavoriteArray.splice(index, 1);
+      myFavorite.classList.remove("red");
     } else {
       listOfMyFavoriteArray.push(cliked);
     }
@@ -184,42 +185,3 @@ const assignListener = () => {
 
 /* llamadas */
 paintAllFavorites();
-
-//////////////////// hasta aqui ok...
-/* const paintAllCardsWithFavoriteCssClass = () => {
-  containerCardsSeries.innerHTML = "";
-  let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-  for (let i = 0; i < showsList.length; i++) {
-    let favoriteCssClass = "";
-    for (let j = 0; j < myLocalStorageFavorite.length; j++) {
-      if (showsList[i].show.name === myLocalStorageFavorite[j].show.name) {
-        favoriteCssClass = "red";
-      }
-    }
-    if (showsList[i].show.image === null) {
-      paintCard(
-        `//via.placeholder.com/210x295/ffffff/666666/?
-              text=TV.`,
-        showsList[i].show.name,
-        i,
-        favoriteCssClass
-      );
-    } else {
-      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
-    }
-  }
-}; */
-///////////////////
-/* const paintAllFavorites = () => {
-  containerFavorites.innerHTML = "";
-  let listOfMyFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-  if (listOfMyFavorite !== null) {
-    for (let i = 0; i < listOfMyFavorite.length; i++) {
-      paintFavoriteCard(listOfMyFavorite[i].show.image.medium, listOfMyFavorite[i].show.name, i);
-    }
-  }
-  if (listOfMyFavorite !== null && )
-
-}; */
-
-///
