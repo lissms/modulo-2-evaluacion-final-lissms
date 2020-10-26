@@ -12,8 +12,6 @@ let showsList;
 
 /* mis funciones que pintan */
 
-/* 1 FUNCIONES QUE PINTAN BUSQUEDA (paintCard. una sola) (paintAllCards. todas con localstorage vacio) (paintAllCardsWithFavoriteCssClass. todas con alguna q coincide conel local storage)*/
-
 const paintCard = (src, name, id, red) => {
   containerCardsSeries.innerHTML += ` 
     <li id = ${id} class="js-li-results ${red}">
@@ -42,29 +40,6 @@ const paintAllCards = () => {
 
 /* pinta todas lar tarjetas y en rojo las q ya estan en favorito, es decir las q tb aparecen en el local-storage */
 
-const paintAllCardsWithFavoriteCssClass = () => {
-  containerCardsSeries.innerHTML = "";
-  let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
-  for (let i = 0; i < showsList.length; i++) {
-    let favoriteCssClass = "";
-    for (let j = 0; j < myLocalStorageFavorite.length; j++) {
-      if (showsList[i].show.name === myLocalStorageFavorite[j].show.name) {
-        favoriteCssClass = "red";
-      }
-    }
-    if (showsList[i].show.image === null) {
-      paintCard(
-        `//via.placeholder.com/210x295/ffffff/666666/?
-              text=TV.`,
-        showsList[i].show.name,
-        i,
-        favoriteCssClass
-      );
-    } else {
-      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
-    }
-  }
-};
 /* 1 FUNCIONES QUE PINTAN FAVORITOS */
 /* pinta un favorito */
 const paintFavoriteCard = (src, name, id) => {
@@ -72,7 +47,7 @@ const paintFavoriteCard = (src, name, id) => {
     <div class="js-info-of-my-serie info-of-my-serie js-width-info-of-my-serie">
     <img class="image-card js-width-image" src="${src}" alt="imagen"
       <h3 class="js-name-series js-width-h3"> ${name}</h3>
-    </div>
+    </div><div id=${id}_div class="button-remove js-button-remove">X</div>
     </li>`;
 };
 
@@ -127,13 +102,8 @@ const addFavoriteSeriesFromLocalStorage = (ev) => {
     console.log("entro en el if");
 
     listOfMyFavoriteArray = JSON.parse(storagedFavoriteList);
-    console.log("objeto clicado desde la api", cliked.show.id);
-    console.log(" myFavoriteId", myFavoriteId);
-    /*   console.log("clicado de mi storage", listOfMyFavoriteArray[myFavoriteId].show.id);
-     */ console.log("listOfMyFavoriteArray.length", listOfMyFavoriteArray.length);
     let index;
     for (let i = 0; i < listOfMyFavoriteArray.length; i++) {
-      /*  debugger; */
       if (listOfMyFavoriteArray[i].show.id === cliked.show.id) {
         index = i;
         flag = true;
@@ -154,10 +124,8 @@ const addFavoriteSeriesFromLocalStorage = (ev) => {
   console.log("listOfMyFavoriteArray", listOfMyFavoriteArray);
   localStorage.setItem("listOfMyFavorite", JSON.stringify(listOfMyFavoriteArray));
 
-  //////
-
-  /* console.log("listOfMyFavoriteArray", listOfMyFavoriteArray); */
   paintAllFavorites();
+  assignListenerToRemove();
 };
 
 /* funciones herramientas */
@@ -169,5 +137,20 @@ const assignListener = () => {
   }
 };
 
+const assignListenerToRemove = () => {
+  let buttonRemoveFavorite = document.querySelectorAll(".js-button-remove");
+  for (let i = 0; i < containerCards.length; i++) {
+    buttonRemoveFavorite.addEventListener("click", removeFavorite);
+  }
+};
 /* llamadas */
 paintAllFavorites();
+
+//////////////
+
+const removeFavorite = (event) => {
+  const notAFavorite = event.currentTarget.id;
+  console.log("notAFavorite", notAFavorite);
+};
+
+///////////////////////////////////////
