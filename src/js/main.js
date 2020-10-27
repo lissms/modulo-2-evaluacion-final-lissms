@@ -92,6 +92,7 @@ const paintAllFavorites = () => {
       );
     }
   }
+  assignListenerToRemove();
 };
 
 /* mis funciones handler */
