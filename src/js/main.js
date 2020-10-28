@@ -3,6 +3,7 @@
 /*datos de inicio */
 
 /* 1-DOM Y VARIABLES */
+const paragraph = document.querySelector(".message");
 const button = document.querySelector(".js-search-button");
 let resultsSearch = document.querySelector(".js-search-input");
 const containerCardsSeries = document.querySelector(".js-ul-list-of-series");
@@ -14,17 +15,23 @@ let showsList;
 
 /* 1 FUNCIONES QUE PINTAN BUSQUEDA (paintCard. una sola) (paintAllCards. todas con localstorage vacio) (paintAllCardsWithFavoriteCssClass. todas con alguna q coincide conel local storage)*/
 
-const paintCard = (src, name, id, red) => {
+const addparagraph = () => {
+  paragraph.innerHTML = `El total de resultados es ${showsList.length}`;
+};
+
+const paintCard = (src, name, id, red, premiered) => {
   containerCardsSeries.innerHTML += ` 
     <li id = ${id} class="js-li-results ${red}">
     <div class="js-info-of-my-serie info-of-my-serie">
-    <img class="image card" src="${src}" alt=""
+    <img class="image card" src="${src}" alt="">
       <h3 class="js-name-series"> ${name}</h3>
+      <h3 class="js-premiered"> ${premiered}
     </div>
   </li>`;
 };
 /* pinta todas las terjetas, cuando todavia no hay ninguna en favoritos */
 const paintAllCards = () => {
+  console.log("object", addparagraph());
   containerCardsSeries.innerHTML = "";
   for (let i = 0; i < showsList.length; i++) {
     if (showsList[i].show.image === null) {
@@ -32,10 +39,12 @@ const paintAllCards = () => {
         `//via.placeholder.com/210x295/ffffff/666666/?
               text=TV.`,
         showsList[i].show.name,
-        i
+        i,
+        "",
+        showsList[i].show.premiered
       );
     } else {
-      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i);
+      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, "", showsList[i].show.premiered);
     }
   }
 };
@@ -43,6 +52,7 @@ const paintAllCards = () => {
 /* pinta todas lar tarjetas y en rojo las q ya estan en favorito, es decir las q tb aparecen en el local-storage */
 
 const paintAllCardsWithFavoriteCssClass = () => {
+  addparagraph();
   containerCardsSeries.innerHTML = "";
   let myLocalStorageFavorite = JSON.parse(localStorage.getItem("listOfMyFavorite"));
   for (let i = 0; i < showsList.length; i++) {
@@ -58,10 +68,17 @@ const paintAllCardsWithFavoriteCssClass = () => {
               text=TV.`,
         showsList[i].show.name,
         i,
-        favoriteCssClass
+        favoriteCssClass,
+        showsList[i].show.premiered
       );
     } else {
-      paintCard(showsList[i].show.image.medium, showsList[i].show.name, i, favoriteCssClass);
+      paintCard(
+        showsList[i].show.image.medium,
+        showsList[i].show.name,
+        i,
+        favoriteCssClass,
+        showsList[i].show.premiered
+      );
     }
   }
 };
@@ -102,6 +119,7 @@ const searchResultFromApi = () => {
       } else {
         paintAllCards();
       }
+
       assignListener();
     });
 };
@@ -171,3 +189,17 @@ const assignListener = () => {
 
 /* llamadas */
 paintAllFavorites();
+///////////////
+
+const arrayNumbers = [2, 5, 9];
+const addComparison = () => {
+  console.log("hola");
+  for (const arrayNumber of arrayNumbers) {
+    if (arrayNumber > showsList.length) {
+      console.log(`el total de resultados es menor que mi ${arrayNumber}`);
+    } else if (arrayNumber < showsList.length) console.log(`el total de resultados es mayor que mi ${arrayNumber}`);
+    console.log("arryNumber", arrayNumber);
+  }
+};
+
+paragraph.addEventListener(`click`, addComparison);

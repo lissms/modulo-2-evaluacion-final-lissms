@@ -24,7 +24,7 @@
   justify-content: center;
   align-items: center;
   width: 230px;
-  height: 325px;
+  height: 500px;
   margin: 5px 10px;
 }
 .image-card {
@@ -54,4 +54,9 @@
 }
 .js-font {
   font-size: 11px;
+}
+.message {
+  position: absolute;
+  top: 0;
+  left: 400px;
 }
